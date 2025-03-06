@@ -32,7 +32,25 @@ router.put("/profile", protect, async (req, res) => {
     } catch (error) {
       res.status(500).json({ message: "Server error" });
     }
-    
+     // ✅ Change Password
+  router.put("/password", protect, async (req, res) => {
+    const { currentPassword, newPassword } = req.body;
+  
+    try {
+      const user = await User.findById(req.user.id);
+      if (!user) return res.status(404).json({ message: "User not found" });
+  
+      const isMatch = await user.matchPassword(currentPassword);
+      if (!isMatch) return res.status(400).json({ message: "Incorrect current password" });
+  
+      user.password = newPassword; // Will be hashed in `pre("save")`
+      await user.save();
+  
+      res.json({ message: "Password updated successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Server error" });
+    }
+  });
   });
 
 module.exports = router;
