@@ -4,6 +4,10 @@ const bcrypt = require("bcryptjs");
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  name: { type: String },
+  language: { type: String, default: "English" },
+  theme: { type: String, default: "light" },
+  notifications: { type: Boolean, default: true },
 });
 
 // Hash password before saving
