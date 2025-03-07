@@ -23,9 +23,9 @@ router.post("/", protect, async (req, res) => {
   }
 
   try {
-    const newDevice = new Device({ name, type, userId: req.user.id });
+    const newDevice = new Device({ name, type,connectionType, userId: req.user.id });
     await newDevice.save();
-    res.status(201).json(newDevice);
+    res.status(201).json({message: "Device added successfully", device: newDevice});
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
