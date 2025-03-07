@@ -5,6 +5,10 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authroutes");
 const deviceRoutes = require("./routes/deviceRoutes");
 const settingsRoutes = require("./routes/settingsRoutes");
+const healthRoutes = require("./routes/healthRoutes");
+const cameraRoutes = require("./routes/cameraRoutes");
+const musicRoutes = require("./routes/musicRoutes");
+const swingRoutes = require("./routes/swingRoutes");
 
 require("dotenv").config();
 
@@ -18,7 +22,11 @@ app.use(bodyParser.json());
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/devices", deviceRoutes);
-app.use("/api/settings", settingsRoutes)
+app.use("/api/settings", settingsRoutes);
+app.use("/api/health", healthRoutes);
+app.use("/api/camera", cameraRoutes);
+app.use("/api/music", musicRoutes);
+app.use("/api/swing", swingRoutes)
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
