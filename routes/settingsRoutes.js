@@ -17,19 +17,17 @@ router.get("/", protect, async (req, res) => {
   }
 });
 
-// ✅ Update Profile
-router.put("/profile", protect, async (req, res) => {
-  const { name, email } = req.body;
-
+// ✅ Get user profile
+router.get("/profile", protect, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    user.name = name || user.name;
-    user.email = email || user.email;
-    await user.save();
-
-    res.json({ message: "Profile updated successfully", user });
+    res.json({
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+    });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
