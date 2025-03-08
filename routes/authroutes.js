@@ -11,16 +11,25 @@ router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    // Check if the user exists
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "Invalid email or password" });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
 
+    // Check if the password is correct
     const isMatch = await user.matchPassword(password);
-    if (!isMatch) return res.status(400).json({ message: "Invalid email or password" });
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
 
+    // Generate a JWT token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
-    res.json({ token, user: { id: user._id, email: user.email } });
+    // Send the token and user data in the response
+    res.json({ token, user: { id: user._id, email: user.email, name: user.name } });
   } catch (error) {
+    console.error("Error in /signin:", error); // Log the error for debugging
     res.status(500).json({ message: "Server error" });
   }
 });
