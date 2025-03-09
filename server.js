@@ -9,13 +9,17 @@ const healthRoutes = require("./routes/healthRoutes");
 const cameraRoutes = require("./routes/cameraRoutes");
 const musicRoutes = require("./routes/musicRoutes");
 const swingRoutes = require("./routes/swingRoutes");
+const versionRoutes = require("./routes/versionRoutes"); // ✅ New import
 
 require("dotenv").config();
 
 // Initialize Express
 const app = express();
+
+// Connect to database
 connectDB();
 
+// Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -26,7 +30,9 @@ app.use("/api/settings", settingsRoutes);
 app.use("/api/health", healthRoutes);
 app.use("/api/camera", cameraRoutes);
 app.use("/api/music", musicRoutes);
-app.use("/api/swing", swingRoutes)
+app.use("/api/swing", swingRoutes);
+app.use("/api/version", versionRoutes); // ✅ New route
 
+// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
