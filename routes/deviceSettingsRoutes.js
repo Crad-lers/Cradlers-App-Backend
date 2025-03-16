@@ -4,7 +4,7 @@ const protect = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-// ✅ Get current device settings
+// Get current device settings
 router.get("/", protect, async (req, res) => {
   try {
     let settings = await DeviceSettings.findOne({ userId: req.user.id });
@@ -19,7 +19,7 @@ router.get("/", protect, async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch settings" });
   }
-  // ✅ Update device settings
+  // Update device settings
 router.put("/", protect, async (req, res) => {
     const { bodyTemperature, oxygenLevel, cradleSwingSpeed } = req.body;
   
