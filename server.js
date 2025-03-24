@@ -10,6 +10,8 @@ const cameraRoutes = require("./routes/cameraRoutes");
 const musicRoutes = require("./routes/musicRoutes");
 const swingRoutes = require("./routes/swingRoutes");
 const versionRoutes = require("./routes/versionRoutes"); // ✅ New import
+=======
+const deviceSettingsRoutes = require("./routes/deviceSettingsRoutes");
 
 require("dotenv").config();
 
@@ -32,6 +34,9 @@ app.use("/api/camera", cameraRoutes);
 app.use("/api/music", musicRoutes);
 app.use("/api/swing", swingRoutes);
 app.use("/api/version", versionRoutes); // ✅ New route
+=======
+app.use("/api/swing", swingRoutes)
+app.use("/api/settings/device", deviceSettingsRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
